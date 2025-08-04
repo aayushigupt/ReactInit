@@ -9,7 +9,7 @@ const resList = [
       areaName: "Residency Road",
       costForTwo: "₹500 for two",
       cuisines: ["Biryani", "Andhra", "South Indian", "Chinese", "Seafood"],
-      avgRating: 4.7,
+      avgRating: 3.7,
       parentId: "635",
       avgRatingString: "4.7",
       totalRatingsString: "85K+",
