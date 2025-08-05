@@ -8,6 +8,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
+    publicPath: "/",
   },
   mode: "development",
   devServer: {
@@ -18,6 +19,7 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -37,7 +39,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./dist/index.html", // Use your existing index.html as a template
+      template: "./src/index.html", // Use your existing index.html as a template
     }),
   ],
   cache: {
