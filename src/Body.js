@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import React, { useContext, useEffect, useState } from "react";
+import RestaurantCard, { withTravelTime } from "./RestaurantCard";
 import resList from "./utils/constants/data";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import UserContext from "./utils/context/UserContext";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -12,6 +13,10 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const RestaurantCardWithTravelTime = withTravelTime(RestaurantCard);
+
+  const {loggedInUser, setUserName} = useContext(UserContext)
 
   const fetchData = () => {
     fetch(
@@ -51,6 +56,10 @@ const Body = () => {
         value={searchText}
         onChange={(event) => setSearchText(event.target.value)}
       />
+      <input
+        value={loggedInUser}
+        onChange={(event) => setUserName(event.target.value)}
+      />
       <button
         onClick={() => {
           const filteredList = restaurants?.filter((eachRes) =>
@@ -61,13 +70,21 @@ const Body = () => {
           setListOfRestaurants(filteredList);
         }}
       >
-        {" "}
-        Search{" "}
+        Search
       </button>
+
       <div className="res-container">
         {listOfRestaurants?.map((eachRes) => (
           <Link to={"/restaurant/" + eachRes?.info?.id}>
-            <RestaurantCard key={eachRes?.info?.id} resData={eachRes} />
+            {eachRes?.info?.sla?.lastMileTravel > 2.5 ? (
+              <RestaurantCardWithTravelTime
+                key={eachRes?.info?.id}
+                resData={eachRes}
+                timeString={eachRes?.info?.sla?.lastMileTravelString}
+              />
+            ) : (
+              <RestaurantCard key={eachRes?.info?.id} resData={eachRes} />
+            )}
           </Link>
         ))}
       </div>

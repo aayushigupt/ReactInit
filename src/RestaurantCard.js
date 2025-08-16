@@ -29,3 +29,12 @@ const RestaurantCard = (props) => {
 };
 
 export default RestaurantCard;
+
+export const withTravelTime = (RestaurantCard) => {
+  return (props) => {
+    return <div>
+      <label> {props.timeString} </label>
+      <RestaurantCard {...props} />
+    </div>
+  }
+}
